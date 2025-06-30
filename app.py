@@ -4,13 +4,17 @@ from huggingface_hub import list_datasets
 import spacy
 import re
 import os
+import subprocess
 
 
 os.environ['KAGGLE_USERNAME'] = st.secrets["KAGGLE_USERNAME"]
 os.environ['KAGGLE_KEY'] = st.secrets["KAGGLE_KEY"]
 
-# Load spaCy model
-nlp = spacy.load("en_core_web_sm")
+try:
+     nlp = spacy.load("en_core_web_sm")
+except OSError:
+    subprocess.run(["python", "-m", "spacy", "download", "en_core_web_sm"])
+    nlp = spacy.load("en_core_web_sm")
 
 # Checking user prompt for keywords and filters
 def extract_keywords_and_filters(prompt):
