@@ -3,7 +3,14 @@ from kaggle.api.kaggle_api_extended import KaggleApi
 from huggingface_hub import list_datasets
 import spacy
 import re
+import os
 
+
+os.environ['KAGGLE_USERNAME'] = st.secrets["KAGGLE_USERNAME"]
+os.environ['KAGGLE_KEY'] = st.secrets["KAGGLE_KEY"]
+
+api = KaggleApi()
+api.authenticate()
 # Load spaCy model
 nlp = spacy.load("en_core_web_sm")
 
